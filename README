@@ -1,0 +1,15 @@
+First build the DRM library as described:
+
+sudo apt install -y git make g++ libcurl4-openssl-dev libjsoncpp-dev cmake
+git clone https://github.com/Accelize/drm.git --recursive --depth 1
+cd drm
+mkdir build
+cd build
+# To make this work, I had to "steal" a cmake from openembedded because the
+# default one in my ubunut 18 was too old.
+# Also jsoncpp doesn't appear to have a pkg-config file so I had to provide
+# the include dir setting by hand
+cmake .. -DJSONCPP_INCLUDEDIR=/usr/include/jsoncpp
+make -j 8
+sudo make install
+
