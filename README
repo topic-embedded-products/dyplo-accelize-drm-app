@@ -5,11 +5,22 @@ git clone https://github.com/Accelize/drm.git --recursive --depth 1
 cd drm
 mkdir build
 cd build
-# To make this work, I had to "steal" a cmake from openembedded because the
-# default one in my ubunut 18 was too old.
-# Also jsoncpp doesn't appear to have a pkg-config file so I had to provide
+# jsoncpp doesn't have a pkg-config file so you need to provide
 # the include dir setting by hand
 cmake .. -DJSONCPP_INCLUDEDIR=/usr/include/jsoncpp
 make -j 8
 sudo make install
+
+
+Build the application by running "make".
+
+Note: The current Makefile will not work when cross-compiled because of the 'hard' CXXFLAGS needed for the JSON library.
+
+If you installed the accelize_drm library in its default location
+(/usr/local/lib) you'll need to run the application like this:
+
+LD_LIBRARY_PATH=/usr/local/lib ./dyplo-accelize-drm-app
+
+If you get "Failed to mmap /dev/dyplo-drm", its probably about file permissions, give users access using:
+  sudo chmod a+rw /dev/dyplo-drm
 
